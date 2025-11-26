@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidades - Zen Social</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .logo h1 {
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-nav a {
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: #667eea;
+        }
+
+        .header-nav a.active {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Main Container */
+        .main-container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            color: #333;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Search and Filters */
+        .search-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #f5f5f5;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Communities Grid */
+        .communities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .community-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .community-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .community-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .community-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .community-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .community-info p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .community-body {
+            padding: 20px;
+        }
+
+        .community-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .community-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        .community-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            flex: 1;
+            transition: background 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-join {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-join:hover {
+            background: #5a6fd8;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: #f5f5f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #667eea;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            max-width: 1200px;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .communities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .filter-options {
+                justify-content: center;
+            }
+
+            .community-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">Z</div>
+                <h1>Zen Social</h1>
+            </div>
+            <nav class="header-nav">
+                <a href="home.html">Início</a>
+                <a href="communities.html" class="active">Comunidades</a>
+                <a href="messages.html">Recados</a>
+                <a href="profile.html">Meu Perfil</a>
+                <div class="user-menu">
+                    <div class="user-avatar">JS</div>
+                    <span>João Silva</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">Comunidades</h1>
+            <button class="btn btn-primary" onclick="window.location.href='criar-comunidade.html'">
+                Criar Nova Comunidade
+            </button>
+        </div>
+
+        <div class="search-section">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Buscar comunidades...">
+                <button class="search-btn">Buscar</button>
+            </div>
+            <div class="filter-options">
+                <button class="filter-btn active">Todas</button>
+                <button class="filter-btn">Minhas Comunidades</button>
+                <button class="filter-btn">Populares</button>
+                <button class="filter-btn">Recentes</button>
+            </div>
+        </div>
+
+        <div class="communities-grid">
+            <!-- Comunidade 1 -->
+            <div class="community-card">
+                <div class="community-header">
+                    <div class="community-icon">📷</div>
+                    <div class="community-info">
+                        <h3>Fotografia Zen</h3>
+                        <p>Criado por @mariafotografia</p>
+                    </div>
+                </div>
+                <div class="community-body">
+                    <p class="community-description">
+                        Um espaço para compartilhar fotos, dicas e técnicas de fotografia com foco na calmaria e beleza simples.
+                    </p>
+                    <div class="community-stats">
+                        <span>245 membros</span>
+                        <span>32 tópicos</span>
+                    </div>
+                    <div class="community-actions">
+                        <button class="btn-secondary" onclick="viewCommunity(1)">Ver Comunidade</button>
+                        <button class="btn-secondary btn-join">Participar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comunidade 2 -->
+            <div class="community-card">
+                <div class="community-header">
+                    <div class="community-icon">📚</div>
+                    <div class="community-info">
+                        <h3>Leitura Calma</h3>
+                        <p>Criado por @pedroleitor</p>
+                    </div>
+                </div>
+                <div class="community-body">
+                    <p class="community-description">
+                        Para amantes de livros que apreciam uma boa leitura em paz. Compartilhe recomendações e resenhas.
+                    </p>
+                    <div class="community-stats">
+                        <span>189 membros</span>
+                        <span>45 tópicos</span>
+                    </div>
+                    <div class="community-actions">
+                        <button class="btn-secondary" onclick="viewCommunity(2)">Ver Comunidade</button>
+                        <button class="btn-secondary btn-join">Participar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comunidade 3 -->
+            <div class="community-card">
+                <div class="community-header">
+                    <div class="community-icon">🎵</div>
+                    <div class="community-info">
+                        <h3>Música Relaxante</h3>
+                        <p>Criado por @anamusic</p>
+                    </div>
+                </div>
+                <div class="community-body">
+                    <p class="community-description">
+                        Descubra e compartilhe músicas que trazem paz e tranquilidade. De clássicos a sons ambientais.
+                    </p>
+                    <div class="community-stats">
+                        <span>312 membros</span>
+                        <span>67 tópicos</span>
+                    </div>
+                    <div class="community-actions">
+                        <button class="btn-secondary" onclick="viewCommunity(3)">Ver Comunidade</button>
+                        <button class="btn-secondary btn-join">Participar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comunidade 4 -->
+            <div class="community-card">
+                <div class="community-header">
+                    <div class="community-icon">🌿</div>
+                    <div class="community-info">
+                        <h3>Natureza e Paz</h3>
+                        <p>Criado por @carlosecologista</p>
+                    </div>
+                </div>
+                <div class="community-body">
+                    <p class="community-description">
+                        Conecte-se com a natureza, compartilhe experiências ao ar livre e aprenda sobre sustentabilidade.
+                    </p>
+                    <div class="community-stats">
+                        <span>178 membros</span>
+                        <span>28 tópicos</span>
+                    </div>
+                    <div class="community-actions">
+                        <button class="btn-secondary" onclick="viewCommunity(4)">Ver Comunidade</button>
+                        <button class="btn-secondary btn-join">Participar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comunidade 5 -->
+            <div class="community-card">
+                <div class="community-header">
+                    <div class="community-icon">🧘</div>
+                    <div class="community-info">
+                        <h3>Meditação Diária</h3>
+                        <p>Criado por @lucaspaz</p>
+                    </div>
+                </div>
+                <div class="community-body">
+                    <p class="community-description">
+                        Pratique meditação em comunidade, compartilhe técnicas e experiências de mindfulness.
+                    </p>
+                    <div class="community-stats">
+                        <span>156 membros</span>
+                        <span>41 tópicos</span>
+                    </div>
+                    <div class="community-actions">
+                        <button class="btn-secondary" onclick="viewCommunity(5)">Ver Comunidade</button>
+                        <button class="btn-secondary btn-join">Participar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comunidade 6 -->
+            <div class="community-card">
+                <div class="community-header">
+                    <div class="community-icon">🍵</div>
+                    <div class="community-info">
+                        <h3>Chá e Conversa</h3>
+                        <p>Criado por @mariadocha</p>
+                    </div>
+                </div>
+                <div class="community-body">
+                    <p class="community-description">
+                        Para apreciadores de chá que gostam de conversas tranquilas e momentos de descontração.
+                    </p>
+                    <div class="community-stats">
+                        <span>134 membros</span>
+                        <span>23 tópicos</span>
+                    </div>
+                    <div class="community-actions">
+                        <button class="btn-secondary" onclick="viewCommunity(6)">Ver Comunidade</button>
+                        <button class="btn-secondary btn-join">Participar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#sobre">Sobre nós</a>
+            <a href="#trabalhe">Trabalhe conosco</a>
+            <a href="#privacidade">Política de privacidade</a>
+            <a href="#termos">Termos de uso</a>
+            <a href="#contato">Contato</a>
+        </div>
+        <div class="copyright">
+            © 2025 Zen Social. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script>
+        function viewCommunity(communityId) {
+            // Redirecionar para a página da comunidade
+            window.location.href = `comunidade.html?id=${communityId}`;
+        }
+
+        // Simulação de busca e filtros
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-input').value;
+            if (searchTerm) {
+                alert(`Buscando por: ${searchTerm}`);
+                // Em produção, aqui seria uma chamada à API
+            }
+        });
+
+        // Filtros
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.textContent;
+                alert(`Filtrando por: ${filter}`);
+                // Em produção, aqui seria uma chamada à API
+            });
+        });
+
+        // Participar de comunidade
+        document.querySelectorAll('.btn-join').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const communityCard = this.closest('.community-card');
+                const communityName = communityCard.querySelector('h3').textContent;
+                
+                if (this.textContent === 'Participar') {
+                    this.textContent = 'Participando';
+                    this.style.background = '#2ecc71';
+                    alert(`Agora você está participando da comunidade: ${communityName}`);
+                } else {
+                    this.textContent = 'Participar';
+                    this.style.background = '#667eea';
+                    alert(`Você saiu da comunidade: ${communityName}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
