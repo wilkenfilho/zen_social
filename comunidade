@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotografia Zen - Zen Social</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .logo h1 {
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-nav a {
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: #667eea;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Main Container */
+        .main-container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .community-info {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .community-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+        }
+
+        .community-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .community-creator {
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .community-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .community-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .community-actions {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .community-rules {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .rules-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .rules-list {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .rules-list ul {
+            padding-left: 20px;
+        }
+
+        .rules-list li {
+            margin-bottom: 5px;
+        }
+
+        /* Content */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Topics List */
+        .topics-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .topic {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .topic:hover {
+            background: #f9f9f9;
+        }
+
+        .topic-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #667eea;
+            flex-shrink: 0;
+        }
+
+        .topic-content {
+            flex: 1;
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .topic-title {
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .topic-title:hover {
+            color: #667eea;
+        }
+
+        .topic-author {
+            color: #667eea;
+            font-size: 14px;
+        }
+
+        .topic-preview {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .topic-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .topic-replies {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Members List */
+        .members-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .member {
+            text-align: center;
+        }
+
+        .member-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #667eea;
+        }
+
+        .member-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .member-role {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            max-width: 1200px;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: 2;
+            }
+
+            .content {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .members-list {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">Z</div>
+                <h1>Zen Social</h1>
+            </div>
+            <nav class="header-nav">
+                <a href="home.html">Início</a>
+                <a href="communities.html">Comunidades</a>
+                <a href="messages.html">Recados</a>
+                <a href="profile.html">Meu Perfil</a>
+                <div class="user-menu">
+                    <div class="user-avatar">JS</div>
+                    <span>João Silva</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="community-info">
+                <div class="community-icon">📷</div>
+                <div class="community-name">Fotografia Zen</div>
+                <div class="community-creator">Criado por @mariafotografia</div>
+                <p class="community-description">
+                    Um espaço para compartilhar fotos, dicas e técnicas de fotografia com foco na calmaria e beleza simples.
+                </p>
+            </div>
+
+            <div class="community-stats">
+                <div class="stat">
+                    <div class="stat-value">245</div>
+                    <div class="stat-label">Membros</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">32</div>
+                    <div class="stat-label">Tópicos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Respostas</div>
+                </div>
+            </div>
+
+            <div class="community-actions">
+                <button class="btn btn-primary" onclick="window.location.href='criar-topico.html'">Novo Tópico</button>
+                <button class="btn btn-secondary" id="joinBtn" onclick="toggleJoin()">Participar</button>
+            </div>
+
+            <div class="community-rules">
+                <div class="rules-title">Regras da Comunidade</div>
+                <div class="rules-list">
+                    <ul>
+                        <li>Respeite todos os membros</li>
+                        <li>Compartilhe apenas fotos de sua autoria</li>
+                        <li>Forneça feedback construtivo</li>
+                        <li>Mantenha o foco na fotografia</li>
+                        <li>Evite conteúdo comercial</li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Tópicos Section -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Tópicos Recentes</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="window.location.href='criar-topico.html'">Novo Tópico</button>
+                    </div>
+                </div>
+
+                <div class="topics-list">
+                    <!-- Tópico 1 -->
+                    <div class="topic">
+                        <div class="topic-avatar">MF</div>
+                        <div class="topic-content">
+                            <div class="topic-header">
+                                <a href="topico.html" class="topic-title">Dicas para fotografia de paisagem ao amanhecer</a>
+                                <span class="topic-author">@mariafotografia</span>
+                            </div>
+                            <p class="topic-preview">
+                                Compartilhe suas técnicas para capturar a luz suave do amanhecer. Quais configurações de câmera vocês recomendam?
+                            </p>
+                            <div class="topic-meta">
+                                <span>há 2 horas</span>
+                                <span class="topic-replies">💬 12 respostas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tópico 2 -->
+                    <div class="topic">
+                        <div class="topic-avatar">CA</div>
+                        <div class="topic-content">
+                            <div class="topic-header">
+                                <a href="topico.html" class="topic-title">Recomendações de lentes para retratos</a>
+                                <span class="topic-author">@carlosamador</span>
+                            </div>
+                            <p class="topic-preview">
+                                Estou querendo investir em uma nova lente para retratos. Alguém tem sugestões de lentes que criem um bokeh bonito?
+                            </p>
+                            <div class="topic-meta">
+                                <span>há 1 dia</span>
+                                <span class="topic-replies">💬 8 respostas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tópico 3 -->
+                    <div class="topic">
+                        <div class="topic-avatar">AN</div>
+                        <div class="topic-content">
+                            <div class="topic-header">
+                                <a href="topico.html" class="topic-title">Fotografia em preto e branco - Compartilhem suas melhores!</a>
+                                <span class="topic-author">@ananatureza</span>
+                            </div>
+                            <p class="topic-preview">
+                                Vamos compartilhar nossas fotos favoritas em preto e branco e discutir o que torna uma boa foto monocromática.
+                            </p>
+                            <div class="topic-meta">
+                                <span>há 3 dias</span>
+                                <span class="topic-replies">💬 24 respostas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tópico 4 -->
+                    <div class="topic">
+                        <div class="topic-avatar">PL</div>
+                        <div class="topic-content">
+                            <div class="topic-header">
+                                <a href="topico.html" class="topic-title">Como superar o bloqueio criativo?</a>
+                                <span class="topic-author">@pedroleao</span>
+                            </div>
+                            <p class="topic-preview">
+                                Ultimamente tenho me sentido sem inspiração para fotografar. O que vocês fazem quando passam por isso?
+                            </p>
+                            <div class="topic-meta">
+                                <span>há 5 dias</span>
+                                <span class="topic-replies">💬 15 respostas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Membros Section -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Membros Ativos</h2>
+                </div>
+
+                <div class="members-list">
+                    <div class="member">
+                        <div class="member-avatar">MF</div>
+                        <div class="member-name">Maria Fotografia</div>
+                        <div class="member-role">Criador</div>
+                    </div>
+                    <div class="member">
+                        <div class="member-avatar">CA</div>
+                        <div class="member-name">Carlos Amador</div>
+                        <div class="member-role">Membro</div>
+                    </div>
+                    <div class="member">
+                        <div class="member-avatar">AN</div>
+                        <div class="member-name">Ana Natureza</div>
+                        <div class="member-role">Membro</div>
+                    </div>
+                    <div class="member">
+                        <div class="member-avatar">PL</div>
+                        <div class="member-name">Pedro Leão</div>
+                        <div class="member-role">Membro</div>
+                    </div>
+                    <div class="member">
+                        <div class="member-avatar">JS</div>
+                        <div class="member-name">João Silva</div>
+                        <div class="member-role">Membro</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#sobre">Sobre nós</a>
+            <a href="#trabalhe">Trabalhe conosco</a>
+            <a href="#privacidade">Política de privacidade</a>
+            <a href="#termos">Termos de uso</a>
+            <a href="#contato">Contato</a>
+        </div>
+        <div class="copyright">
+            © 2025 Zen Social. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script>
+        function toggleJoin() {
+            const joinBtn = document.getElementById('joinBtn');
+            if (joinBtn.textContent === 'Participar') {
+                joinBtn.textContent = 'Participando';
+                joinBtn.style.background = '#2ecc71';
+                alert('Agora você é membro da comunidade Fotografia Zen!');
+            } else {
+                joinBtn.textContent = 'Participar';
+                joinBtn.style.background = '#f5f5f5';
+                alert('Você saiu da comunidade Fotografia Zen.');
+            }
+        }
+
+        // Simulação de carregamento de dados da comunidade
+        document.addEventListener('DOMContentLoaded', function() {
+            // Em produção, aqui seria uma chamada à API para carregar dados da comunidade
+            const urlParams = new URLSearchParams(window.location.search);
+            const communityId = urlParams.get('id');
+            console.log('Carregando comunidade ID:', communityId);
+        });
+    </script>
+</body>
+</html>
