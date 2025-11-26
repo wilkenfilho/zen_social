@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Comunidade - Zen Social</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .logo h1 {
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-nav a {
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: #667eea;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Main Container */
+        .main-container {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-help {
+            font-size: 13px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .icon-selection {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .icon-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .icon-option:hover {
+            background: #e0e0e0;
+        }
+
+        .icon-option.selected {
+            background: #667eea;
+            color: white;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            max-width: 1200px;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">Z</div>
+                <h1>Zen Social</h1>
+            </div>
+            <nav class="header-nav">
+                <a href="home.html">Início</a>
+                <a href="communities.html">Comunidades</a>
+                <a href="messages.html">Recados</a>
+                <a href="profile.html">Meu Perfil</a>
+                <div class="user-menu">
+                    <div class="user-avatar">JS</div>
+                    <span>João Silva</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">Criar Nova Comunidade</h1>
+            <p class="page-subtitle">Compartilhe seus interesses e conecte-se com pessoas que pensam como você</p>
+        </div>
+
+        <div class="form-container">
+            <form id="createCommunityForm" onsubmit="handleCreateCommunity(event)">
+                <div class="form-group">
+                    <label for="communityName">Nome da Comunidade</label>
+                    <input type="text" id="communityName" name="communityName" placeholder="Ex: Fotografia Zen" required>
+                    <div class="form-help">Escolha um nome descritivo e atrativo para sua comunidade</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="communityDescription">Descrição</label>
+                    <textarea id="communityDescription" name="communityDescription" placeholder="Descreva o propósito da sua comunidade..." required></textarea>
+                    <div class="form-help">Explique claramente o que os membros podem esperar desta comunidade</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="communityCategory">Categoria</label>
+                    <select id="communityCategory" name="communityCategory" required>
+                        <option value="">Selecione uma categoria</option>
+                        <option value="arte">Arte e Cultura</option>
+                        <option value="tecnologia">Tecnologia</option>
+                        <option value="natureza">Natureza e Meio Ambiente</option>
+                        <option value="saude">Saúde e Bem-estar</option>
+                        <option value="hobbies">Hobbies e Lazer</option>
+                        <option value="educacao">Educação</option>
+                        <option value="musica">Música</option>
+                        <option value="livros">Livros e Literatura</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Ícone da Comunidade</label>
+                    <div class="icon-selection">
+                        <div class="icon-option" data-icon="📷">📷</div>
+                        <div class="icon-option" data-icon="📚">📚</div>
+                        <div class="icon-option" data-icon="🎵">🎵</div>
+                        <div class="icon-option" data-icon="🌿">🌿</div>
+                        <div class="icon-option" data-icon="🧘">🧘</div>
+                        <div class="icon-option" data-icon="🍵">🍵</div>
+                        <div class="icon-option" data-icon="🎨">🎨</div>
+                        <div class="icon-option" data-icon="⚽">⚽</div>
+                        <div class="icon-option" data-icon="🎮">🎮</div>
+                        <div class="icon-option" data-icon="📱">📱</div>
+                    </div>
+                    <input type="hidden" id="communityIcon" name="communityIcon" required>
+                    <div class="form-help">Escolha um ícone que represente sua comunidade</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="communityPrivacy">Privacidade</label>
+                    <select id="communityPrivacy" name="communityPrivacy" required>
+                        <option value="public">Pública - Qualquer pessoa pode ver e participar</option>
+                        <option value="private">Privada - Apenas membros convidados podem participar</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="communityRules">Regras da Comunidade (Opcional)</label>
+                    <textarea id="communityRules" name="communityRules" placeholder="Estabeleça regras para manter um ambiente saudável..."></textarea>
+                    <div class="form-help">Regras claras ajudam a manter a comunidade organizada e respeitosa</div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Criar Comunidade</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='communities.html'">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#sobre">Sobre nós</a>
+            <a href="#trabalhe">Trabalhe conosco</a>
+            <a href="#privacidade">Política de privacidade</a>
+            <a href="#termos">Termos de uso</a>
+            <a href="#contato">Contato</a>
+        </div>
+        <div class="copyright">
+            © 2025 Zen Social. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // Seleção de ícones
+        document.querySelectorAll('.icon-option').forEach(icon => {
+            icon.addEventListener('click', function() {
+                document.querySelectorAll('.icon-option').forEach(i => i.classList.remove('selected'));
+                this.classList.add('selected');
+                document.getElementById('communityIcon').value = this.getAttribute('data-icon');
+            });
+        });
+
+        function handleCreateCommunity(event) {
+            event.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('communityName').value,
+                description: document.getElementById('communityDescription').value,
+                category: document.getElementById('communityCategory').value,
+                icon: document.getElementById('communityIcon').value,
+                privacy: document.getElementById('communityPrivacy').value,
+                rules: document.getElementById('communityRules').value
+            };
+            
+            // Validação
+            if (!formData.icon) {
+                alert('Por favor, selecione um ícone para a comunidade');
+                return;
+            }
+            
+            // Simulação de criação (em produção, seria uma chamada à API)
+            console.log('Criando comunidade:', formData);
+            
+            alert('Comunidade criada com sucesso! Redirecionando...');
+            setTimeout(() => {
+                window.location.href = 'communities.html';
+            }, 1000);
+        }
+
+        // Validação em tempo real
+        document.getElementById('communityName').addEventListener('input', function() {
+            if (this.value.length > 50) {
+                this.style.borderColor = '#e74c3c';
+            } else {
+                this.style.borderColor = '#e0e0e0';
+            }
+        });
+    </script>
+</body>
+</html>
