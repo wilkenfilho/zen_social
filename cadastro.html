@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Zen Social</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .logo h1 {
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .header-nav a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: #667eea;
+        }
+
+        /* Main Container */
+        .main-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .signup-container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .signup-container h2 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .form-group label {
+            display: block;
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .age-validation {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .age-validation p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            color: #666;
+            margin: 0;
+        }
+
+        .signup-button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .signup-button:hover {
+            opacity: 0.9;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            max-width: 1200px;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .signup-container {
+                padding: 30px 20px;
+            }
+
+            .signup-container h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-nav {
+                display: flex;
+                gap: 15px;
+            }
+
+            .header-nav a {
+                margin: 0;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">Z</div>
+                <h1>Zen Social</h1>
+            </div>
+            <nav class="header-nav">
+                <a href="index.html">Voltar para Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="signup-container">
+            <h2>Crie sua conta no Zen Social</h2>
+            
+            <div class="age-validation">
+                <p>Para criar uma conta no Zen Social, você precisa ter pelo menos 16 anos de idade.</p>
+            </div>
+            
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Nome:</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="Seu nome" required>
+                        <div class="error-message" id="firstNameError">Nome é obrigatório</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">Sobrenome:</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Seu sobrenome" required>
+                        <div class="error-message" id="lastNameError">Sobrenome é obrigatório</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="email@exemplo.com" required>
+                    <div class="error-message" id="emailError">E-mail inválido</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">Nome de usuário:</label>
+                    <input type="text" id="username" name="username" placeholder="seu_nome_de_usuario" required>
+                    <div class="error-message" id="usernameError">Nome de usuário é obrigatório</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthDate">Data de nascimento:</label>
+                    <input type="date" id="birthDate" name="birthDate" required>
+                    <div class="error-message" id="birthDateError">Você deve ter pelo menos 16 anos</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    <div class="error-message" id="passwordError">A senha deve ter pelo menos 8 caracteres</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar senha:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="••••••••" required>
+                    <div class="error-message" id="confirmPasswordError">As senhas não coincidem</div>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">Concordo com os Termos de Uso e Política de Privacidade</label>
+                </div>
+                
+                <button type="submit" class="signup-button">Criar conta</button>
+            </form>
+            
+            <div class="login-link">
+                <p>Já tem uma conta? <a href="index.html">Faça login</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#sobre">Sobre nós</a>
+            <a href="#trabalhe">Trabalhe conosco</a>
+            <a href="#privacidade">Política de privacidade</a>
+            <a href="#termos">Termos de uso</a>
+            <a href="#contato">Contato</a>
+        </div>
+        <div class="copyright">
+            © 2025 Zen Social. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script>
+        function handleSignup(event) {
+            event.preventDefault();
+            
+            // Validação de idade (16+)
+            const birthDate = new Date(document.getElementById('birthDate').value);
+            const today = new Date();
+            const age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            
+            let validAge = false;
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                validAge = age - 1 >= 16;
+            } else {
+                validAge = age >= 16;
+            }
+            
+            if (!validAge) {
+                document.getElementById('birthDateError').style.display = 'block';
+                document.getElementById('birthDate').style.borderColor = '#e74c3c';
+                return;
+            }
+            
+            // Validação de senha
+            const password = document.getElementById('password').value;
+            if (password.length < 8) {
+                document.getElementById('passwordError').style.display = 'block';
+                document.getElementById('password').style.borderColor = '#e74c3c';
+                return;
+            }
+            
+            // Validação de confirmação de senha
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                document.getElementById('confirmPassword').style.borderColor = '#e74c3c';
+                return;
+            }
+            
+            // Simulação de cadastro (em produção, isso seria uma chamada à API)
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                username: document.getElementById('username').value,
+                birthDate: document.getElementById('birthDate').value,
+                password: password
+            };
+            
+            console.log('Cadastro attempt:', formData);
+            alert('Cadastro realizado com sucesso! Redirecionando para o login...');
+            window.location.href = 'index.html';
+        }
+
+        // Validação em tempo real
+        document.getElementById('birthDate').addEventListener('change', function() {
+            const birthDate = new Date(this.value);
+            const today = new Date();
+            const age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            
+            let validAge = false;
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                validAge = age - 1 >= 16;
+            } else {
+                validAge = age >= 16;
+            }
+            
+            if (!validAge) {
+                document.getElementById('birthDateError').style.display = 'block';
+                this.style.borderColor = '#e74c3c';
+            } else {
+                document.getElementById('birthDateError').style.display = 'none';
+                this.style.borderColor = '#e0e0e0';
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            if (this.value.length < 8) {
+                document.getElementById('passwordError').style.display = 'block';
+                this.style.borderColor = '#e74c3c';
+            } else {
+                document.getElementById('passwordError').style.display = 'none';
+                this.style.borderColor = '#e0e0e0';
+            }
+        });
+
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            if (this.value !== password) {
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                this.style.borderColor = '#e74c3c';
+            } else {
+                document.getElementById('confirmPasswordError').style.display = 'none';
+                this.style.borderColor = '#e0e0e0';
+            }
+        });
+    </script>
+</body>
+</html>
