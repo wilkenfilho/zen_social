@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Zen Social</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .logo h1 {
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-nav a {
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: #667eea;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Main Container */
+        .main-container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .profile-card {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #667eea;
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .profile-username {
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .profile-bio {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #555;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .sidebar-menu a:hover {
+            background: #f5f5f5;
+        }
+
+        .sidebar-menu a.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Content */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Messages */
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .message:last-child {
+            border-bottom: none;
+        }
+
+        .message-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #667eea;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .message-sender {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .message-time {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .message-text {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Communities */
+        .communities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .community-card {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .community-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .community-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .community-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .community-stats {
+            display: flex;
+            justify-content: space-around;
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            max-width: 1200px;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: 2;
+            }
+
+            .content {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .communities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">Z</div>
+                <h1>Zen Social</h1>
+            </div>
+            <nav class="header-nav">
+                <a href="home.html">Início</a>
+                <a href="communities.html">Comunidades</a>
+                <a href="messages.html">Recados</a>
+                <a href="profile.html" class="active">Meu Perfil</a>
+                <div class="user-menu">
+                    <div class="user-avatar">JS</div>
+                    <span>João Silva</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="profile-avatar">JS</div>
+                <div class="profile-name">João Silva</div>
+                <div class="profile-username">@joaosilva</div>
+                <div class="profile-bio">Apaixonado por tecnologia, música e natureza. Vivendo um dia de cada vez com calmaria.</div>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="stat-value">127</div>
+                        <div class="stat-label">Amigos</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">42</div>
+                        <div class="stat-label">Comunidades</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Recados</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;">Editar Perfil</button>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active">📝 Meus Recados</a></li>
+                <li><a href="#">👥 Meus Amigos</a></li>
+                <li><a href="#">🏠 Minhas Comunidades</a></li>
+                <li><a href="#">📸 Minhas Fotos</a></li>
+                <li><a href="#">⚙️ Configurações</a></li>
+            </ul>
+        </aside>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Recados Section -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Recados</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="showNewMessageForm()">Novo Recado</button>
+                    </div>
+                </div>
+
+                <div class="messages-list">
+                    <div class="message">
+                        <div class="message-avatar">MS</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-sender">Maria Santos</span>
+                                <span class="message-time">2 horas atrás</span>
+                            </div>
+                            <div class="message-text">
+                                Oi João! Como você está? Vi que você entrou na comunidade de Fotografia, que legal! Também adoro tirar fotos da natureza.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar">PS</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-sender">Pedro Souza</span>
+                                <span class="message-time">1 dia atrás</span>
+                            </div>
+                            <div class="message-text">
+                                E aí, João! Lembra daquele livro que você recomendou? Acabei de terminar e foi incrível! Obrigado pela dica.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar">AS</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-sender">Ana Costa</span>
+                                <span class="message-time">3 dias atrás</span>
+                            </div>
+                            <div class="message-text">
+                                Parabéns pelo aniversário! Espero que tenha um dia maravilhoso cheio de paz e alegria. 🎂
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comunidades Section -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Minhas Comunidades</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="showNewCommunityForm()">Nova Comunidade</button>
+                    </div>
+                </div>
+
+                <div class="communities-grid">
+                    <div class="community-card">
+                        <div class="community-icon">📷</div>
+                        <div class="community-name">Fotografia Zen</div>
+                        <div class="community-stats">
+                            <span>245 membros</span>
+                            <span>32 tópicos</span>
+                        </div>
+                    </div>
+
+                    <div class="community-card">
+                        <div class="community-icon">📚</div>
+                        <div class="community-name">Leitura Calma</div>
+                        <div class="community-stats">
+                            <span>189 membros</span>
+                            <span>45 tópicos</span>
+                        </div>
+                    </div>
+
+                    <div class="community-card">
+                        <div class="community-icon">🎵</div>
+                        <div class="community-name">Música Relaxante</div>
+                        <div class="community-stats">
+                            <span>312 membros</span>
+                            <span>67 tópicos</span>
+                        </div>
+                    </div>
+
+                    <div class="community-card">
+                        <div class="community-icon">🌿</div>
+                        <div class="community-name">Natureza e Paz</div>
+                        <div class="community-stats">
+                            <span>178 membros</span>
+                            <span>28 tópicos</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#sobre">Sobre nós</a>
+            <a href="#trabalhe">Trabalhe conosco</a>
+            <a href="#privacidade">Política de privacidade</a>
+            <a href="#termos">Termos de uso</a>
+            <a href="#contato">Contato</a>
+        </div>
+        <div class="copyright">
+            © 2025 Zen Social. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script>
+        function showNewMessageForm() {
+            const receiver = prompt('Para quem você quer enviar um recado? (digite o nome de usuário)');
+            if (receiver) {
+                const message = prompt('Digite seu recado:');
+                if (message) {
+                    alert(`Recado enviado para ${receiver} com sucesso!`);
+                    // Em produção, aqui seria uma chamada à API
+                }
+            }
+        }
+
+        function showNewCommunityForm() {
+            const name = prompt('Qual o nome da nova comunidade?');
+            if (name) {
+                const description = prompt('Descreva brevemente sua comunidade:');
+                if (description) {
+                    alert(`Comunidade "${name}" criada com sucesso!`);
+                    // Em produção, aqui seria uma chamada à API
+                }
+            }
+        }
+
+        // Simulação de carregamento de dados do perfil
+        document.addEventListener('DOMContentLoaded', function() {
+            // Em produção, aqui seria uma chamada à API para carregar dados do usuário
+            console.log('Página de perfil carregada');
+        });
+    </script>
+</body>
+</html>
